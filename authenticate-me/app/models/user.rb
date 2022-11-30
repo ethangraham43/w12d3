@@ -9,7 +9,8 @@ class User < ApplicationRecord
   validates :session_token, presence: true, uniqueness: true
   validates :password, length: { in: 6..255 }, allow_nil: true
 
-  def self.find_by_credentials(credential:, password:)
+  def self.find_by_credentials(credential, password)
+    # debugger
     user = credential.match?(URI::MailTo::EMAIL_REGEXP) ? User.find_by(email: credential) : User.find_by(username: credential)
     return nil if user.nil?
 
