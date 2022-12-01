@@ -22,7 +22,7 @@ class User < ApplicationRecord
     save!
     session_token
   end
-d
+
   private
 
   def generate_unique_session_token
