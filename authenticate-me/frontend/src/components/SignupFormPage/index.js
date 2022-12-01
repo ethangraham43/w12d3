@@ -18,27 +18,29 @@ const SignupFormPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-        setErrors([]);
-        return dispatch(sessionActions.signup({ email, username, password })).catch(
-          async (res) => {
-            let data;
-            try {
-              data = await res.clone().json();
-            } catch {
-              data = await res.text();
-            }
-    
-            if (data?.errors) {
-              setErrors(data.errors);
-            } else if (data) {
-              setErrors([data]);
-            } else {
-              setErrors(setErrors([res.statusText]));
-            }
-          }
-        )
-    };
-    return setErrors (['Confirm password field must be the same as the password field'])
+      setErrors([]);
+      return dispatch(
+        sessionActions.signup({ email, username, password })
+      ).catch(async (res) => {
+        let data;
+        try {
+          data = await res.clone().json();
+        } catch {
+          data = await res.text();
+        }
+
+        if (data?.errors) {
+          setErrors(data.errors);
+        } else if (data) {
+          setErrors([data]);
+        } else {
+          setErrors(setErrors([res.statusText]));
+        }
+      });
+    }
+    return setErrors([
+      "Confirm password field must be the same as the password field"
+    ]);
   };
 
   return (
@@ -75,7 +77,7 @@ const SignupFormPage = () => {
         />
         <label htmlFor="confirmPassword">Confirm Password</label>
         <input
-          type="confirmPassword"
+          type="password"
           name="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
